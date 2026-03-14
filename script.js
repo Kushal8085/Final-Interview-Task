@@ -251,8 +251,8 @@ clearVoiceBtn.onclick = () => {
     console.log(text)
     console.log(text.length)
     if (text.length === 0) {
-      clearInterval(interval);
       voiceText.textContent = "Waiting for speech...";
+      clearInterval(interval);
     }
 
   }, 20);
