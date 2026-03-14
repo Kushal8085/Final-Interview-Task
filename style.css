@@ -4,8 +4,10 @@
 
   /* THE TRAP VARIABLES */
   --reveal-opacity: 0;
-  --security-blur: blur(20px); /* Makes the pixels completely unreadable */
-  --secret-scale: scale(0); /* Shrinks it to nothing */
+  --security-blur: blur(20px);
+  /* Makes the pixels completely unreadable */
+  --secret-scale: scale(0);
+  /* Shrinks it to nothing */
 }
 
 body {
@@ -38,10 +40,12 @@ h1 {
 }
 
 @keyframes blink {
+
   0%,
   100% {
     opacity: 0.7;
   }
+
   50% {
     opacity: 0.2;
   }
@@ -93,4 +97,145 @@ body {
   pointer-events: none;
   z-index: 100;
   transition: all 0.8s ease-in-out;
+}
+
+/* ===============================
+   DASHBOARD
+================================ */
+
+#dashboard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--bg-color);
+  color: var(--text-main);
+}
+
+#dashboard h1 {
+  letter-spacing: 0.4rem;
+  margin-bottom: 40px;
+}
+
+/* .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  gap: 30px;
+} */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  width: 90%;
+  max-width: 1100px;
+}
+
+@media (max-width: 768px) {
+
+  #dashboard h1 {
+    font-size: 1.6rem;
+    letter-spacing: 0.2rem;
+    text-align: center;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+}
+
+/* .card {
+  border: 2px solid #00ff41;
+  padding: 20px;
+  text-align: center;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 10px #00ff41;
+} */
+
+/* ===============================
+   CARD STYLE
+================================ */
+
+.card {
+  border: 2px solid #00ff41;
+  padding: 20px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 10px #00ff41;
+
+  transition: transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* HOVER POP EFFECT */
+
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+
+  box-shadow:
+    0 0 10px #00ff41,
+    0 0 20px #00ff41,
+    0 0 40px rgba(0, 255, 65, 0.7);
+
+  border-color: #7cff9b;
+}
+
+.card h2 {
+  margin-bottom: 15px;
+}
+
+video {
+  width: 100%;
+  border: 1px solid #00ff41;
+}
+
+button {
+  background: black;
+  color: #00ff41;
+  border: 1px solid #00ff41;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-family: "Courier New", monospace;
+}
+
+button:hover {
+  background: #00ff41;
+  color: black;
+}
+
+#voiceText,
+#btResult {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.status-light {
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  color: rgba(0, 255, 65, 0.5);
+  /* dim green instead of red */
+}
+
+.status-light.active {
+  color: #00ff41;
+  /* bright green when active */
+}
+
+.status-light.error {
+  color: #ff4d4d;
+  /* red only for errors */
 }

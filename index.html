@@ -1,18 +1,68 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zenithra Tech - Secure Portal</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="terminal-container">
-      <h1 class="glitch" data-text="ZENITHRA TECH">ZENITHRA TECH</h1>
-      <p class="status">System Online. Awaiting Authorization...</p>
-    </div>
-    <canvas id="quest-init" width="600" height="120"></canvas>
 
-    <script src="./script.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zenithra Tech - Secure Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- TERMINAL SCREEN -->
+  <div class="terminal-container" id="terminal">
+    <h1 class="glitch" data-text="ZENITHRA TECH">ZENITHRA TECH</h1>
+    <p class="status">System Online. Awaiting Authorization...</p>
+  </div>
+
+  <canvas id="quest-init" width="600" height="120"></canvas>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard">
+
+    <h1>ZENITHRA TECH DASHBOARD</h1>
+
+    <div class="grid">
+
+      <!-- VIDEO -->
+      <div class="card">
+        <h2>📷 Video Feed</h2>
+
+        <p id="cameraStatus" class="status-light">● Camera Off</p>
+
+        <button id="startCamera">Start Camera</button>
+        <button id="stopCamera" style="display:none;">Stop Camera</button>
+
+        <video id="videoFeed" autoplay playsinline style="margin-top: 15px;"></video>
+      </div>
+
+      <div class="card">
+
+        <h2>🎤 Voice to Text</h2>
+
+        <p id="voiceStatus" class="status-light">● Microphone Idle</p>
+
+        <button id="startVoice">Start Listening</button>
+        <button id="stopVoice" style="display:none;">Stop Listening</button>
+        <button id="clearVoice">Clear</button>
+
+        <p id="voiceText">Waiting for speech...</p>
+
+      </div>
+
+      <!-- BLUETOOTH -->
+      <div class="card">
+        <h2>🦷 Bluetooth Devices</h2>
+        <button id="scanBluetooth">Scan Bluetooth</button>
+        <p id="btResult">No device connected</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+
+</body>
+
 </html>
