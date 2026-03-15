@@ -40,7 +40,7 @@
     // Create a CANVAS element instead of a DIV
     const canvas = document.createElement("canvas");
     canvas.id = "quest-init";
-    canvas.width = 600;
+    canvas.width = Math.min(window.innerWidth * 0.9, 600);
     canvas.height = 120;
 
     // Get the 2D drawing context
@@ -145,6 +145,8 @@ const SpeechRecognition =
 
 let recognition = null;
 let isListening = false;
+let isClearing = false;
+let finalTranscript = "";
 const startVoiceBtn = document.getElementById("startVoice");
 const stopVoiceBtn = document.getElementById("stopVoice");
 const clearVoiceBtn = document.getElementById("clearVoice");
@@ -199,13 +201,22 @@ if (SpeechRecognition) {
   // SPEECH RESULT
   recognition.onresult = (event) => {
 
-    let transcript = "";
+    let interimTranscript = "";
+
+    if (isClearing) return;
 
     for (let i = event.resultIndex; i < event.results.length; i++) {
-      transcript += event.results[i][0].transcript;
+      const transcript = event.results[i][0].transcript;
+
+      if (event.results[i].isFinal) {
+        finalTranscript += transcript + " ";
+      } else {
+        interimTranscript += transcript;
+      }
+
     }
 
-    voiceText.textContent = transcript;
+    voiceText.textContent = finalTranscript + interimTranscript;
   };
 
   // ERROR HANDLING (permission denied etc.)
@@ -240,20 +251,27 @@ if (SpeechRecognition) {
 
 }
 
+let clearIntervalId;
+
 clearVoiceBtn.onclick = () => {
+  finalTranscript = "";
+  isClearing = true;
+
+  if (clearIntervalId) clearInterval(clearIntervalId);
 
   let text = voiceText.textContent;
 
-  const interval = setInterval(() => {
+  clearIntervalId = setInterval(() => {
+
+    if (text.length <= 0) {
+      voiceText.textContent = "Waiting for speech...";
+      clearInterval(clearIntervalId);
+      isClearing = false;
+      return;
+    }
 
     text = text.slice(0, -1);
     voiceText.textContent = text;
-    console.log(text)
-    console.log(text.length)
-    if (text.length === 0) {
-      voiceText.textContent = "Waiting for speech...";
-      clearInterval(interval);
-    }
 
   }, 20);
 
