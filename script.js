@@ -164,23 +164,27 @@ if (SpeechRecognition) {
   // START LISTENING
   startVoiceBtn.onclick = () => {
 
-    if (isListening) return; // prevent multiple starts
+    if (isListening) return;
 
     try {
-      console.log(isListening)
       recognition.start();
-      isListening = true;
-
-      voiceStatus.textContent = "● Listening...";
-      voiceStatus.classList.add("active");
-      voiceStatus.classList.remove("error");
-
-      startVoiceBtn.style.display = "none";
-      stopVoiceBtn.style.display = "inline-block";
-
     } catch (error) {
       console.log(error);
     }
+
+  };
+
+  recognition.onstart = () => {
+
+    isListening = true;
+
+    voiceStatus.textContent = "● Listening...";
+    voiceStatus.classList.add("active");
+    voiceStatus.classList.remove("error");
+
+    startVoiceBtn.style.display = "none";
+    stopVoiceBtn.style.display = "inline-block";
+
   };
 
   // STOP LISTENING
@@ -222,13 +226,13 @@ if (SpeechRecognition) {
   // ERROR HANDLING (permission denied etc.)
   recognition.onerror = (event) => {
 
-    // isListening = false;
+    isListening = false;
 
     if (event.error === "not-allowed") {
 
       voiceStatus.textContent = "⚠ Microphone permission denied";
       voiceStatus.classList.add("error");
-
+      voiceStatus.classList.remove("active");
     }
 
     stopVoiceBtn.style.display = "none";
